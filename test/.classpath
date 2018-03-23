@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="src" path="test_simple/src"/>
+	<classpathentry kind="lib" path="dropbox-core-sdk-3.0.4.jar"/>
+	<classpathentry kind="output" path="test_simple/src"/>
+</classpath>

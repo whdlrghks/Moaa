@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  </head>
+  <body>
+    <h1>Welcome <%= Name %></h1>
+    <h1>Your unique id is <%= user_ID %></h1>
+    <p>
+    <a href='/auth/logout'> logout</a>
+    </p>
+
+    <p>
+    <a href='/auth_token/googleindex'> get google token</a>
+    </p>
+    <p>
+    <a href='/auth_token/dropboxindex'> get dropbox token</a>
+    </p>
+    <p>
+    <a href='/auth_token/boxindex'> get box token</a>
+    </p>
+
+    <p>
+    <a href='/refresh/google'> refresh google token</a>
+    </p>
+    <p>
+    <a href='/refresh/box'> refresh box token</a>
+    </p>
+    <p>
+            <form id='uploadform 'action='upload' method='post' enctype="multipart/form-data">
+
+              <input type='file' name='userfile'>
+              <button type="submit" >업로드</button>
+            </form>
+            <div class="progress">
+              <div class="bar"></div >
+              <div class="percent">0%</div >
+          </div>
+          <form action='download' method='post'>
+              <button type="submit" >다운로드</button>
+            <table border="1">
+                    <tr>
+                        <td> </td>
+                        <td>번   호</td>
+                        <td>파일이름</td>
+                        <td>파일형식</td>
+                        <td>올린날짜</td>
+                        <td>파일용량</td>
+                    </tr>
+
+                      <%
+                      <!--byte to kb,mb,gb  -->
+                      function formatBytes(bytes,decimals) {
+                         if(bytes == 0) return '0 Bytes';
+                         var k = 1024,
+                             dm = decimals || 2,
+                             sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'],
+                             i = Math.floor(Math.log(bytes) / Math.log(k));
+                         return parseFloat((bytes / Math.pow(k, i)).toFixed(dm)) + ' ' + sizes[i];
+                      }
+                        if(filelist.length>0){
+                           for(var i=0; i<filelist.length; i++)
+                           {
+                              var oneItem = filelist[i];
+                              var size = formatBytes(oneItem.size,3);
+
+                      %>
+                    <tr>
+                       <td><input type="checkbox" name="name" value="<%=oneItem.file_ID%>" ></td>
+                        <td><%=i%></td>
+                        <td><%=oneItem.filename%></td>
+                        <td><%=oneItem.mimetype%></td>
+                        <td><%=oneItem.date%></td>
+                        <td><%=size%></td>
+                    </tr>
+
+                      <%
+                    }}
+                      %>
+            </table>
+          </form>
+    </p>
+
+
+
+
+  </body>
+  <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+  <script src="http://cdnjs.cloudflare.com/ajax/libs/jquery.form/3.51/jquery.form.min.js"></script>
+</html>
+<script>
+$(function() {
+
+            var bar = $('.bar');
+            var percent = $('.percent');
+            var status = $('#status');
+
+            $('#uploadform').ajaxForm({
+                beforeSend: function() {
+                    status.empty();
+                    var percentVal = '0%';
+                    bar.width(percentVal);
+                    percent.html(percentVal);
+                },
+                uploadProgress: function(event, position, total, percentComplete) {
+                    var percentVal = percentComplete + '%';
+                    bar.width(percentVal);
+                    percent.html(percentVal);
+                },
+                complete: function(xhr) {
+                    status.html(xhr.responseText);
+                }
+            });
+        });
+</script>

@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  </head>
+  <body>
+      <h1>Welcome <%= Name %></h1>
+    <a href=  <%=url %> target="_blank" > Sign In with Dropbox</a>
+    <form action="/dropbox/callback" method="post">
+			<label class="input-label">토큰 엑세스 키 입력</label>
+			<input type="text" name="dropbox_ac_code" class="form-control">
+			<button type="submit" class="btn btn-default btn-drive" id="btn-full">토큰받기</button>
+		</form>
+
+  </body>
+</html>
